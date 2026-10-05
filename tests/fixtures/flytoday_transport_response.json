@@ -1,0 +1,18 @@
+{
+  "status": "success",
+  "data": {
+    "trips": [
+      {
+        "id": "ft_bus_301",
+        "company": "همسفر چابکسواران",
+        "busType": "VIP 25 صندلی تخت شو",
+        "departureTime": "15:30",
+        "departureDate": "2026-10-15",
+        "originTerminal": "ترمینال بیهقی (آرژانتین)",
+        "destinationTerminal": "ترمینال صفه اصفهان",
+        "price": 2850000,
+        "availableSeats": 8
+      }
+    ]
+  }
+}

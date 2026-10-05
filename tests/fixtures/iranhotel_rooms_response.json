@@ -1,0 +1,60 @@
+{
+  "room": {
+    "roomContainer": [
+      {
+        "id": 461,
+        "name": "اتاق دو تخته دبل نرمال",
+        "roomInfos": [
+          {
+            "reservable": true,
+            "roomCapacity": {
+              "adultCapacity": 2,
+              "infantCapacity": 1,
+              "extraCapacity": 1,
+              "extraCapacityPrice": 40000000.0
+            },
+            "roomPrice": {
+              "discount": 5.0,
+              "price": {
+                "boardPrice": 160000000.0,
+                "ihoPrice": 152000000.0,
+                "nights": 1
+              }
+            },
+            "roomDetail": {
+              "breakfast": true,
+              "nonRefundable": false
+            }
+          }
+        ]
+      },
+      {
+        "id": 459,
+        "name": "اتاق یک تخته نرمال",
+        "roomInfos": [
+          {
+            "reservable": true,
+            "roomCapacity": {
+              "adultCapacity": 1,
+              "infantCapacity": 0,
+              "extraCapacity": 0,
+              "extraCapacityPrice": null
+            },
+            "roomPrice": {
+              "discount": 10.0,
+              "price": {
+                "boardPrice": 120000000.0,
+                "ihoPrice": 108000000.0,
+                "nights": 1
+              }
+            },
+            "roomDetail": {
+              "breakfast": true,
+              "nonRefundable": true
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

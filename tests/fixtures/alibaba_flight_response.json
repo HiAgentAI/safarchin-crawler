@@ -1,0 +1,41 @@
+{
+  "success": true,
+  "result": {
+    "departing": [
+      {
+        "uniqueKey": "alibaba_fl_101",
+        "airline": {
+          "name": "Mahan Air",
+          "code": "W5"
+        },
+        "flightNumber": "1032",
+        "aircraft": "Airbus A300",
+        "departureTime": "08:30:00",
+        "arrivalTime": "10:00:00",
+        "departureDate": "2026-10-15",
+        "priceAdult": 18500000,
+        "isCharter": false,
+        "seat": 5,
+        "class": "Y",
+        "classType": "economy"
+      },
+      {
+        "uniqueKey": "alibaba_fl_102",
+        "airline": {
+          "name": "Iran Air",
+          "code": "IR"
+        },
+        "flightNumber": "260",
+        "aircraft": "Airbus A320",
+        "departureTime": "14:15:00",
+        "arrivalTime": "15:45:00",
+        "departureDate": "2026-10-15",
+        "priceAdult": 19200000,
+        "isCharter": true,
+        "seat": 2,
+        "class": "M",
+        "classType": "economy"
+      }
+    ]
+  }
+}

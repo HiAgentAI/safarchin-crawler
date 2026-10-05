@@ -1,0 +1,92 @@
+{
+  "PageTitle": {
+    "Title": "رزرو هتل های تهران",
+    "CountHotel": 144,
+    "EndDate": "1405/07/16",
+    "StartDate": "1405/07/15"
+  },
+  "Cards": [
+    {
+      "Header": null,
+      "CardData": {
+        "Id": 149,
+        "ProviderHotelId": null,
+        "HotelName": "پارسیان آزادی",
+        "FullName": "هتل پارسیان آزادی تهران",
+        "HotelForeignName": "Parsian Azadi Hotel",
+        "HotelUrl": "/tehran-hotels/هتل-پارسیان-آزادی/",
+        "TypeTitle": "هتل",
+        "TypeId": 1,
+        "CityName": "تهران",
+        "CityEnName": "Tehran",
+        "Pictures": [
+          {
+            "Alt": "هتل پارسیان آزادی تهران",
+            "Webp": "https://cdn.iranhotelonline.com/Content/Images/Gallery/Mobile/83267.webp"
+          }
+        ],
+        "Score": {
+          "ScoreNumber": 4.4,
+          "Total": 386
+        },
+        "Star": {
+          "GradeId": 5
+        },
+        "Address": {
+          "Address": "تهران، بزرگراه شهید چمران",
+          "Long": 51.390082,
+          "Lat": 35.789708
+        },
+        "DiscountBalloon": {
+          "Discount": 5.0
+        },
+        "Price": {
+          "BoardPrice": 160000000.0,
+          "IhoPrice": 152000000.0
+        },
+        "FreeCapacity": true
+      }
+    },
+    {
+      "Header": null,
+      "CardData": {
+        "Id": 77,
+        "ProviderHotelId": null,
+        "HotelName": "کوثر",
+        "FullName": "هتل کوثر تهران",
+        "HotelForeignName": "Kowsar Hotel",
+        "HotelUrl": "/tehran-hotels/هتل-کوثر/",
+        "TypeTitle": "هتل",
+        "TypeId": 1,
+        "CityName": "تهران",
+        "CityEnName": "Tehran",
+        "Pictures": [
+          {
+            "Alt": "هتل کوثر تهران",
+            "Webp": "https://cdn.iranhotelonline.com/Content/Images/Gallery/Mobile/91216.webp"
+          }
+        ],
+        "Score": {
+          "ScoreNumber": 3.5,
+          "Total": 224
+        },
+        "Star": {
+          "GradeId": 4
+        },
+        "Address": {
+          "Address": "تهران، میدان ولی عصر",
+          "Long": 51.408403,
+          "Lat": 35.713155
+        },
+        "DiscountBalloon": {
+          "Discount": 60.0
+        },
+        "Price": {
+          "BoardPrice": 125000000.0,
+          "IhoPrice": 50000000.0
+        },
+        "FreeCapacity": true
+      }
+    }
+  ]
+}

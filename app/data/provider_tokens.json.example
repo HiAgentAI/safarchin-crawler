@@ -1,0 +1,8 @@
+{
+  "jajiga": {
+    "provider": "jajiga",
+    "token_type": "Bearer",
+    "token": "YOUR_JAJIGA_BEARER_TOKEN_HERE",
+    "expires_at": "2027-10-01T00:00:00Z"
+  }
+}

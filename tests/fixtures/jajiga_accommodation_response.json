@@ -1,0 +1,58 @@
+{
+  "meta": {
+    "title": "اجاره ویلا و کلبه در سوادکوه",
+    "rooms_count": 1105,
+    "min_price": 600000,
+    "max_price": 25000000
+  },
+  "rooms": {
+    "pagination": {
+      "total": 1105,
+      "count": 1,
+      "page": 1,
+      "per_page": 18
+    },
+    "items": [
+      {
+        "id": 3254790,
+        "host": {
+          "id": 1650123,
+          "name": "سهراب",
+          "avatar": "2301302209021650123.jpg"
+        },
+        "province_name": "مازندران",
+        "city_name": "سوادکوه",
+        "url": "/room/3254790",
+        "short_url": "/r/2hce",
+        "title": "رزرو کلبه چوبی در سوادکوه - لفور",
+        "room_number": 2,
+        "floor_area": 110,
+        "guest_number": 4,
+        "max_guest_number": 8,
+        "is_new": false,
+        "price": 2400000,
+        "rating": {
+          "total": 4.9,
+          "count": 67
+        },
+        "pictures": {
+          "items": [
+            {
+              "name": "3254790250303190701.jpg",
+              "preview": "UdD,J;_1s}%FyGxvs$oaTNXBngob.AtSjDt2",
+              "url": "2025/03/03/3254790250303190701.jpg"
+            }
+          ],
+          "total": 18
+        },
+        "price_after_discount": 2200000,
+        "bedrooms": 2,
+        "properties": [
+          "is_plus",
+          "pool",
+          "wifi"
+        ]
+      }
+    ]
+  }
+}

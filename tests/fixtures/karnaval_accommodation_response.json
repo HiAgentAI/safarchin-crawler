@@ -1,0 +1,22 @@
+{
+  "status": 200,
+  "data": {
+    "items": [
+      {
+        "id": "karnaval_villa_99",
+        "title": "ویلای دوبلکس استخردار رامسر",
+        "type": "villa",
+        "city": "رامسر",
+        "capacity": 6,
+        "maxCapacity": 10,
+        "roomsCount": 3,
+        "price": 4500000,
+        "rate": 4.8,
+        "images": [
+          "https://static.karnaval.ir/uploads/2024/villa1.jpg"
+        ],
+        "facilities": ["استخر آبگرم", "فوتبال دستی", "باربیکیو"]
+      }
+    ]
+  }
+}

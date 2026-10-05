@@ -1,0 +1,37 @@
+[
+  {
+    "StateId": 8,
+    "StateTitle": "تهران",
+    "CountHotelsOfState": 75,
+    "Cities": [
+      {
+        "CityId": 19,
+        "CityTitle": "تهران",
+        "CityEnTitle": "Tehran",
+        "CountHotelsOfCity": 70,
+        "Url": "/reviews/تهران/"
+      },
+      {
+        "CityId": 220,
+        "CityTitle": "دماوند",
+        "CityEnTitle": "Damavand",
+        "CountHotelsOfCity": 5,
+        "Url": "/reviews/دماوند/"
+      }
+    ]
+  },
+  {
+    "StateId": 11,
+    "StateTitle": "خراسان رضوی",
+    "CountHotelsOfState": 227,
+    "Cities": [
+      {
+        "CityId": 54,
+        "CityTitle": "مشهد",
+        "CityEnTitle": "Mashhad",
+        "CountHotelsOfCity": 220,
+        "Url": "/reviews/مشهد/"
+      }
+    ]
+  }
+]

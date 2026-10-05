@@ -1,0 +1,60 @@
+services:
+  db:
+    image: postgres:16
+    container_name: safarchin_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-safarchin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-safarchin_secret}
+      POSTGRES_DB: ${POSTGRES_DB:-safarchin_crawler}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U safarchin -d safarchin_crawler"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: safarchin_redis
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: safarchin_api
+    restart: unless-stopped
+    env_file:
+      - .env
+    command: sh -c "uvicorn app.main:app --host 0.0.0.0 --port $${PORT:-8000} --reload"
+    volumes:
+      - .:/app
+    ports:
+      - "${PORT:-8000}:${PORT:-8000}"
+    environment:
+      - PORT=${PORT:-8000}
+      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-safarchin}:${POSTGRES_PASSWORD:-safarchin_secret}@db:5432/${POSTGRES_DB:-safarchin_crawler}
+      - REDIS_URL=redis://redis:6379/0
+      - ENVIRONMENT=${ENVIRONMENT:-development}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  redis_data:

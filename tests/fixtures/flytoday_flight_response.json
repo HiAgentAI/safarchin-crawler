@@ -1,0 +1,35 @@
+{
+  "status": "success",
+  "data": {
+    "pricedItineraries": [
+      {
+        "id": "flytoday_fl_201",
+        "isCharter": false,
+        "pricingInfo": {
+          "totalFare": 17800000,
+          "currency": "IRR"
+        },
+        "originDestinationOptions": [
+          {
+            "flightSegments": [
+              {
+                "airline": {
+                  "persianName": "هواپیمایی معراج",
+                  "englishName": "Meraj Airlines",
+                  "code": "JI"
+                },
+                "flightNumber": "2801",
+                "departureDateTime": "2026-10-15T09:00:00",
+                "arrivalDateTime": "2026-10-15T10:30:00",
+                "departureAirport": "THR",
+                "arrivalAirport": "MHD",
+                "cabinClass": "Economy",
+                "seatsRemaining": 4
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
