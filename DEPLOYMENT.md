@@ -345,30 +345,31 @@ curl -s -H "X-API-Key: <API_KEY>" \
 
 ## 9. Step 8: Production Best Practices & Maintenance
 
-### A. Nginx Reverse Proxy with SSL (HTTPS)
-Place Nginx in front of your custom port with Let's Encrypt SSL:
+### A. Nginx Reverse Proxy Setup (HTTP + HTTPS SSL)
 
-```nginx
-server {
-    server_name api.yourdomain.com;
+A production-tuned Nginx configuration file is provided in [`nginx/safarchin-crawler.conf`](nginx/safarchin-crawler.conf).
 
-    location / {
-        proxy_pass http://127.0.0.1:8000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        
-        # Generous timeouts for live multi-provider crawler aggregation
-        proxy_connect_timeout 30s;
-        proxy_read_timeout 60s;
-        proxy_send_timeout 60s;
-    }
+#### 1. Copy the configuration to Nginx:
+```bash
+sudo cp nginx/safarchin-crawler.conf /etc/nginx/sites-available/safarchin-crawler.conf
+sudo ln -s /etc/nginx/sites-available/safarchin-crawler.conf /etc/nginx/sites-enabled/
+```
 
-    listen 443 ssl;
-    ssl_certificate /etc/letsencrypt/live/api.yourdomain.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/api.yourdomain.com/privkey.pem;
-}
+#### 2. Edit domain and port:
+Open `/etc/nginx/sites-available/safarchin-crawler.conf` and adjust:
+- `server 127.0.0.1:8000;` (change `8000` to your `.env` `PORT` if modified)
+- `server_name api.yourdomain.com;` (replace with your domain or server IP)
+
+#### 3. Obtain free SSL certificates with Certbot:
+```bash
+sudo apt install certbot python3-certbot-nginx -y
+sudo certbot --nginx -d api.yourdomain.com
+```
+
+#### 4. Test configuration and reload Nginx:
+```bash
+sudo nginx -t
+sudo systemctl reload nginx
 ```
 
 ### B. Redis Cache Management
