@@ -2,6 +2,10 @@
 
 This document provides a comprehensive integration guide for the **IranHotelOnline (ایران هتل آنلاین)** provider within the Safarchin Travel Crawler API.
 
+> IranHotelOnline serves hotel and accommodation, and its results are **never cached**
+> so prices stay real-time. See [PROVIDERS.md](PROVIDERS.md) for the full provider and
+> service matrix.
+
 ---
 
 ## 📌 1. Provider Overview

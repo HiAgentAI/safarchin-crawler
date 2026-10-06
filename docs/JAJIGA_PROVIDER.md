@@ -2,6 +2,10 @@
 
 This document provides a comprehensive guide for integrating and querying the **Jajiga (جاجیگا)** accommodation crawler within the Safarchin Travel Crawler API.
 
+> Jajiga is currently the **only** provider serving accommodation, and the only one
+> returning pagination metadata. See [PROVIDERS.md](PROVIDERS.md) for the full
+> provider and service matrix.
+
 ---
 
 ## 📌 1. Provider Overview

@@ -2,11 +2,37 @@
 
 An extensible, asynchronous online crawler engine aggregating real-time travel and hospitality data across **Safarchin.ir**, **Alibaba.ir**, **FlyToday.ir**, **Karnaval.ir**, **Jajiga.com**, and **IranHotelOnline.com**.
 
+> **Provider coverage**: Alibaba currently serves **flights** and **trains** only. Its bus and hotel searches are reachable but no request has been found that they accept, so they are not integrated — see [docs/ALIBABA_PROVIDER.md](docs/ALIBABA_PROVIDER.md).
+
 > 📖 **Guides**: 
-> - **Server Deployment & Production Setup**: [DEPLOYMENT.md](DEPLOYMENT.md)
+> - **Provider & Service Matrix**: [docs/PROVIDERS.md](docs/PROVIDERS.md)
+> - **Known Issues and How to Fix Them**: [docs/KNOWN_ISSUES.md](docs/KNOWN_ISSUES.md)
+> - **Alibaba.ir Integration & Two-Phase Protocol**: [docs/ALIBABA_PROVIDER.md](docs/ALIBABA_PROVIDER.md)
 > - **Safarchin.ir Integration & Route Guide**: [docs/SAFARCHIN_PROVIDER.md](docs/SAFARCHIN_PROVIDER.md)
 > - **Jajiga Integration & Filter Guide**: [docs/JAJIGA_PROVIDER.md](docs/JAJIGA_PROVIDER.md)
 > - **IranHotelOnline Integration Guide**: [docs/IRANHOTEL_PROVIDER.md](docs/IRANHOTEL_PROVIDER.md)
+> - **Server Deployment & Production Setup**: [DEPLOYMENT.md](DEPLOYMENT.md)
+
+---
+
+## Provider coverage
+
+"Declared" is what a provider registers; "working" is whether it returns data today.
+Verified 6 October 2026. Full detail in [docs/PROVIDERS.md](docs/PROVIDERS.md).
+
+| Provider | Flight | Hotel | Accommodation | Bus | Train | Working? |
+|---|---|---|---|---|---|---|
+| **alibaba** | yes | - | - | - | yes | ✅ flights + trains verified live |
+| **flytoday** | yes | yes | - | yes | yes | ❌ all hosts fail DNS |
+| **iranhotel** | - | yes | yes | - | - | ⚠️ needs a provider token |
+| **jajiga** | - | - | yes | - | - | ⚠️ not re-verified this session |
+| **karnaval** | - | - | - | - | - | ⛔ registered but serves nothing |
+| **safarchin** | yes | - | - | - | - | ✅ flights verified (6 results) |
+
+Alibaba is currently the only provider with no known blocker. FlyToday registers
+four services but every host it calls (`flight.`/`hotel.`/`villa.`/`train.`/`bus.flytoday.ir`)
+fails DNS resolution, so it contributes nothing to any response. See
+[Known Issues](docs/KNOWN_ISSUES.md#2-flytoday-contributes-nothing-at-all).
 
 ---
 
@@ -155,6 +181,12 @@ All search requests require the `X-API-Key` header.
 ### 4. Ground Transport (Buses & Trains)
 - Intercity Buses: `GET /api/v1/transport/buses?origin=Tehran&destination=Isfahan&depart_date=2026-10-15`
 - Passenger Trains: `GET /api/v1/transport/trains?origin=Tehran&destination=Mashhad&depart_date=2026-10-15`
+
+Bus search is served by FlyToday only. Train search is served by **FlyToday and Alibaba**; pass `providers=alibaba` to query Alibaba alone.
+
+`origin` and `destination` accept an English or Persian city name (`Tehran`, `مشهد`) or a three-letter IATA code (`THR`, `MHD`). Providers that require codes translate names automatically; a city that cannot be resolved is reported as an error rather than as "no availability".
+
+> **Price units differ by provider and service.** Alibaba quotes flights in Rial and trains in Toman; FlyToday quotes both in Rial. Every response carries a `currency` field, and multi-provider results are ordered by real value rather than by raw amount.
 
 ### 5. System & Discovery
 - `GET /api/v1/providers`: Lists all active providers and supported services.

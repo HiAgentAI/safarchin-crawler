@@ -50,3 +50,40 @@ def test_register_decorator():
         pass
 
     assert "custom_prov" in [p["name"] for p in reg.list_providers() or []] or True
+
+
+def test_alibaba_is_discovered_for_flights_and_trains():
+    """
+    Alibaba declares the services it actually serves.
+
+    A train search is dispatched on the transport type itself, so declaring
+    "train" is what makes Alibaba reachable for train searches.
+    """
+    import app.crawlers  # noqa: F401 - triggers provider registration
+    from app.crawlers.registry import crawler_registry
+
+    flight_names = {c.provider_name for c in crawler_registry.get_crawlers_for_service("flight")}
+    assert "alibaba" in flight_names
+
+    train_names = {c.provider_name for c in crawler_registry.get_crawlers_for_service("train")}
+    assert "alibaba" in train_names
+
+    # Selectable by name, with no other provider leaking into an explicit request
+    only_alibaba = crawler_registry.get_crawlers_for_service("train", requested_providers=["alibaba"])
+    assert [c.provider_name for c in only_alibaba] == ["alibaba"]
+
+
+def test_alibaba_does_not_claim_unimplemented_services():
+    """Alibaba must not be routed to a service it does not implement."""
+    import app.crawlers  # noqa: F401
+    from app.crawlers.registry import crawler_registry
+
+    crawler = crawler_registry.get_crawler("alibaba")
+    assert crawler is not None
+    assert crawler.supports_service("flight") is True
+    assert crawler.supports_service("train") is True
+    # The URL behind the old hotel search returned 404 on every verb
+    assert crawler.supports_service("hotel") is False
+    # The old accommodation search targeted a host that does not resolve in DNS
+    assert crawler.supports_service("accommodation") is False
+    assert crawler.supports_service("bus") is False

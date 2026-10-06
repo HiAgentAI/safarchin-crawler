@@ -122,6 +122,88 @@ async def test_transport_buses_authorized(async_client, auth_header):
         assert resp.json()["status"] == "success"
 
 @pytest.mark.asyncio
+async def test_transport_trains_routes_through_to_alibaba(async_client, auth_header):
+    """
+    The trains endpoint must reach the Alibaba train provider.
+
+    A train search is dispatched on the transport type, so a provider is only
+    reached if it actually declares "train".
+    """
+    from contextlib import ExitStack
+
+    import app.crawlers  # noqa: F401 - registers providers
+    from app.crawlers.registry import crawler_registry
+
+    called = {}
+
+    with ExitStack() as stack:
+        for meta in crawler_registry.list_providers():
+            name = meta["name"]
+            if "train" not in meta["services"]:
+                continue
+            crawler_cls = crawler_registry._classes[name]
+
+            async def _record(self, query, _name=name):
+                called[_name] = called.get(_name, 0) + 1
+                return []
+
+            stack.enter_context(patch.object(crawler_cls, "search_transport", _record))
+
+        resp = await async_client.get(
+            "/api/v1/transport/trains",
+            params={
+                "origin": "THR",
+                "destination": "MHD",
+                "depart_date": "2026-10-20",
+                # Bypass Redis: a cached empty result would make this pass
+                # without ever reaching a provider.
+                "no_cache": "true",
+            },
+            headers=auth_header,
+        )
+
+    assert resp.status_code == 200
+    assert resp.json()["status"] == "success"
+    assert "alibaba" in called, f"Alibaba not reached from the endpoint; called: {sorted(called)}"
+
+@pytest.mark.asyncio
+async def test_transport_buses_does_not_route_to_alibaba(async_client, auth_header):
+    """Alibaba has no bus integration, so a bus search must not reach it."""
+    from contextlib import ExitStack
+
+    import app.crawlers  # noqa: F401
+    from app.crawlers.registry import crawler_registry
+
+    called = {}
+
+    with ExitStack() as stack:
+        for meta in crawler_registry.list_providers():
+            name = meta["name"]
+            if "bus" not in meta["services"]:
+                continue
+            crawler_cls = crawler_registry._classes[name]
+
+            async def _record(self, query, _name=name):
+                called[_name] = called.get(_name, 0) + 1
+                return []
+
+            stack.enter_context(patch.object(crawler_cls, "search_transport", _record))
+
+        resp = await async_client.get(
+            "/api/v1/transport/buses",
+            params={
+                "origin": "THR",
+                "destination": "MHD",
+                "depart_date": "2026-10-20",
+                "no_cache": "true",
+            },
+            headers=auth_header,
+        )
+
+    assert resp.status_code == 200
+    assert "alibaba" not in called
+
+@pytest.mark.asyncio
 async def test_flights_calendar_authorized(async_client, auth_header):
     mock_cal = {
         "origin": "Tehran",

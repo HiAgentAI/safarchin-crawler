@@ -17,9 +17,41 @@ from app.schemas.accommodation import (
     CityItem,
 )
 from app.schemas.transport import TransportSearchQuery, TransportResult
+from app.schemas.common import Currency
 import app.crawlers  # noqa: F401 - ensure all crawler providers are registered
 
 logger = logging.getLogger(__name__)
+
+# Providers report prices in different units. Comparing raw amounts across
+# providers would rank a Toman amount as ten times cheaper than an equal Rial
+# amount. Conversion factors are relative to IRR, which is the comparison unit.
+_CURRENCY_TO_IRR_FACTOR: Dict[str, float] = {
+    Currency.IRR.value: 1.0,
+    Currency.IRT.value: 10.0,
+}
+
+def price_sort_key(price: Any) -> float:
+    """
+    Build a comparable sort key from a PriceInfo-like object.
+
+    Amounts are normalized to IRR so results from providers using different
+    units sort by real value. A missing price, or one in a unit with no known
+    factor, sorts last rather than being treated as free.
+    """
+    if price is None:
+        return float("inf")
+    amount = getattr(price, "amount", None)
+    if amount is None:
+        return float("inf")
+    currency = getattr(price, "currency", None)
+    currency_value = getattr(currency, "value", currency)
+    factor = _CURRENCY_TO_IRR_FACTOR.get(currency_value)
+    if factor is None:
+        return float("inf")
+    try:
+        return float(amount) * factor
+    except (TypeError, ValueError):
+        return float("inf")
 
 class CrawlerOrchestrator:
     """
@@ -29,10 +61,25 @@ class CrawlerOrchestrator:
 
     NON_CACHEABLE_PROVIDERS: Set[str] = {"iranhotel"}
 
+    # Providers whose own search protocol costs more than one round trip need a
+    # larger budget than the shared default, otherwise they are dropped while
+    # faster siblings succeed.
+    PROVIDER_TIMEOUT_OVERRIDES: Dict[str, float] = {
+        "alibaba": 30.0,
+    }
+
     def __init__(self, cache_manager: Optional[CacheManager] = None, timeout: float = 15.0):
         self.cache = cache_manager or CacheManager()
         self.timeout = timeout
         self.last_pagination: Optional[PaginationMeta] = None
+
+    def _timeout_for(self, provider_name: str) -> float:
+        """Resolve the time budget for a single provider call."""
+        if not provider_name:
+            return self.timeout
+        return self.PROVIDER_TIMEOUT_OVERRIDES.get(
+            provider_name.strip().lower(), self.timeout
+        )
 
     def is_provider_cacheable(self, provider_name: str, crawler: Optional[BaseCrawler] = None) -> bool:
         """
@@ -186,7 +233,7 @@ class CrawlerOrchestrator:
             tasks = [getattr(c, crawler_method_name)(query) for c in live_crawlers]
             live_results = await self._run_parallel(tasks, live_crawlers)
 
-            for c, res_list in zip(live_crawlers, live_results):
+            for c, res_list in live_results:
                 if isinstance(res_list, list):
                     live_flattened.extend(res_list)
                     if self.is_provider_cacheable(c.provider_name, c):
@@ -260,7 +307,7 @@ class CrawlerOrchestrator:
             query=query,
             crawler_method_name="search_flights",
             result_cls=FlightResult,
-            sort_key_fn=lambda x: getattr(getattr(x, "price", None), "amount", 0.0),
+            sort_key_fn=lambda x: price_sort_key(getattr(x, "price", None)),
             use_cache=use_cache,
             ttl_seconds=ttl_seconds,
             handle_pagination=False,
@@ -277,7 +324,7 @@ class CrawlerOrchestrator:
             query=query,
             crawler_method_name="search_hotels",
             result_cls=HotelResult,
-            sort_key_fn=lambda x: getattr(getattr(x, "min_price_per_night", None), "amount", 0.0),
+            sort_key_fn=lambda x: price_sort_key(getattr(x, "min_price_per_night", None)),
             use_cache=use_cache,
             ttl_seconds=ttl_seconds,
             handle_pagination=False,
@@ -294,7 +341,7 @@ class CrawlerOrchestrator:
             query=query,
             crawler_method_name="search_accommodations",
             result_cls=AccommodationResult,
-            sort_key_fn=lambda x: getattr(getattr(x, "price_per_night", None), "amount", 0.0),
+            sort_key_fn=lambda x: price_sort_key(getattr(x, "price_per_night", None)),
             use_cache=use_cache,
             ttl_seconds=ttl_seconds,
             handle_pagination=True,
@@ -312,7 +359,7 @@ class CrawlerOrchestrator:
             query=query,
             crawler_method_name="search_transport",
             result_cls=TransportResult,
-            sort_key_fn=lambda x: getattr(getattr(x, "price", None), "amount", 0.0),
+            sort_key_fn=lambda x: price_sort_key(getattr(x, "price", None)),
             use_cache=use_cache,
             ttl_seconds=ttl_seconds,
             handle_pagination=False,
@@ -446,22 +493,45 @@ class CrawlerOrchestrator:
             )
         return cities
 
-    async def _run_parallel(self, tasks: list, crawlers: List[BaseCrawler]) -> list:
-        """Run tasks concurrently with timeout and error resilience."""
-        try:
-            raw_results = await asyncio.wait_for(
-                asyncio.gather(*tasks, return_exceptions=True),
-                timeout=self.timeout,
-            )
-        except asyncio.TimeoutError:
-            logger.error(f"Global crawl timeout exceeded ({self.timeout}s)")
+    async def _run_parallel(self, tasks: list, crawlers: List[BaseCrawler]) -> List[tuple]:
+        """
+        Run tasks concurrently with per-provider timeout and error resilience.
+
+        Returns (crawler, results) pairs rather than a positional list, so a
+        provider that fails can never shift another provider's results onto the
+        wrong crawler during cache attribution.
+        """
+        if not tasks:
             return []
 
-        valid_results = []
-        for i, res in enumerate(raw_results):
-            provider_name = crawlers[i].provider_name
-            if isinstance(res, Exception):
-                logger.error(f"Provider {provider_name} failed with error: {res}")
-            else:
-                valid_results.append(res)
-        return valid_results
+        async def _run_one(index: int, task) -> tuple:
+            crawler = crawlers[index]
+            provider_name = crawler.provider_name
+            try:
+                results = await asyncio.wait_for(task, timeout=self._timeout_for(provider_name))
+            except asyncio.TimeoutError:
+                logger.error(
+                    f"Provider {provider_name} exceeded its {self._timeout_for(provider_name)}s "
+                    f"time budget and was dropped"
+                )
+                return (crawler, None)
+            except Exception as e:
+                logger.error(f"Provider {provider_name} failed with error: {e}")
+                return (crawler, None)
+            return (crawler, results)
+
+        gathered = await asyncio.gather(
+            *(_run_one(i, t) for i, t in enumerate(tasks)), return_exceptions=True
+        )
+
+        paired: List[tuple] = []
+        for entry in gathered:
+            if isinstance(entry, BaseException):
+                # gather itself failed (e.g. cancelled); cannot attribute safely
+                logger.error(f"Crawl task failed unexpectedly: {entry}")
+                continue
+            crawler, results = entry
+            if results is None:
+                continue
+            paired.append((crawler, results))
+        return paired

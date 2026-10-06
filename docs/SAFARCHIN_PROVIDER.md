@@ -2,6 +2,18 @@
 
 This document provides a comprehensive reference and developer guide for querying and integrating the **Safarchin (سفرچین)** flight and transport crawler within the Safarchin Travel Crawler API.
 
+> **Provider status: flights work; the transport service is currently unreachable.**
+> This provider registers `services={"flight", "transport"}`, but the orchestrator
+> dispatches ground transport on the *subtype* (`bus` or `train`), so `transport` is
+> never a lookup key and `search_transport` is never invoked. Flights are verified
+> working (6 results THR to MHD). See [PROVIDERS.md](PROVIDERS.md) and
+> [KNOWN_ISSUES.md](KNOWN_ISSUES.md#3-safarchin-transport-service-is-unreachable).
+>
+> Note: this provider's `airports.py` resolves the English name `Tehran` to **IKA**
+> (Imam Khomaini), because two entries share the slug `Tehran` and the later one
+> overwrites the earlier. The Alibaba crawler works around this explicitly - see
+> [ALIBABA_PROVIDER.md](ALIBABA_PROVIDER.md#one-data-conflict-worth-knowing-about).
+
 ---
 
 ## 📌 1. Provider Overview
@@ -52,7 +64,7 @@ flowchart TD
 
 Safarchin links routes using internal 5-digit city IDs (`10000`, `10001`, etc.) and English URL slug names (`Tehran`, `Mashhad`, `Kish`, etc.).
 
-The crawler provides an intelligent **Airport Resolver** ([`app/crawlers/safarchin/airports.py`](file:///Users/david/Documents/projects/sharifi/safarchin_crawler/app/crawlers/safarchin/airports.py)) supporting **177 airports and cities**. Queries accept any of the following input formats:
+The crawler provides an intelligent **Airport Resolver** ([`app/crawlers/safarchin/airports.py`](../app/crawlers/safarchin/airports.py)) supporting **177 airports and cities**. Queries accept any of the following input formats:
 * **IATA Code (3 Letters):** `THR`, `MHD`, `KIH`, `SYZ`, `TBZ`, `IFN`, `IST`, `DXB`
 * **Persian City Name:** `تهران`, `مشهد`, `کیش`, `شیراز`, `تبریز`, `اصفهان`
 * **English City Name:** `Tehran`, `Mashhad`, `Kish`, `Shiraz`, `Tabriz`, `Isfahan`
