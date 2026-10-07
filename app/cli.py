@@ -8,7 +8,7 @@ from rich.panel import Panel
 from sqlalchemy import select, update
 
 from app.db.base import init_db, async_session_maker
-from app.db.models import APIKey, SearchLog, CrawlerHealth
+from app.db.models import APIKey, SearchLog, CrawlerHealth, Restaurant
 from app.core.security import generate_api_key, hash_api_key
 from app.core.redis import get_redis_client, CacheManager
 from app.core.credentials import (
@@ -21,6 +21,7 @@ from app.core.credentials import (
     revoke_provider_token,
 )
 from app.crawlers.registry import crawler_registry
+from app.schemas.restaurant import RestaurantSearchQuery
 import app.crawlers  # noqa: F401 - load and register all crawlers
 
 
@@ -31,6 +32,7 @@ cache_app = typer.Typer(help="Manage Redis Cache")
 crawlers_app = typer.Typer(help="Manage & Test Crawlers")
 providers_app = typer.Typer(help="Manage Provider Credentials & Tokens")
 token_app = typer.Typer(help="Manage Provider Access Tokens")
+restaurants_app = typer.Typer(help="Manage & Sync Restaurants")
 
 app.add_typer(apikey_app, name="apikey")
 app.add_typer(db_app, name="db")
@@ -38,6 +40,8 @@ app.add_typer(cache_app, name="cache")
 app.add_typer(crawlers_app, name="crawlers")
 app.add_typer(providers_app, name="providers")
 providers_app.add_typer(token_app, name="token")
+app.add_typer(restaurants_app, name="restaurants")
+
 
 console = Console()
 
@@ -391,6 +395,96 @@ async def cli_providers_status():
 
     console.print(table)
 
+# Restaurants commands
+@restaurants_app.command("sync")
+@coro
+async def sync_restaurants(
+    city: str = typer.Option(..., "--city", "-c", help="City name to crawl and sync (e.g. Isfahan, Yazd, Tehran)"),
+):
+    """Crawl restaurants for a city via OpenStreetMap and store in database."""
+    console.print(f"[bold yellow]Crawling restaurants for city '{city}'...[/bold yellow]")
+    crawler = crawler_registry.get_crawler("openstreetmap")
+    if not crawler:
+        console.print("[bold red]✗ OpenStreetMap crawler not found in registry![/bold red]")
+        return
+    query = RestaurantSearchQuery(city=city, limit=500)
+    try:
+        results = await crawler.search_restaurants(query)
+        console.print(f"[bold green]Fetched {len(results)} restaurants from OpenStreetMap.[/bold green]")
+        if not results:
+            return
+
+        async with async_session_maker() as session:
+            count = 0
+            for r in results:
+                stmt = select(Restaurant).where(Restaurant.osm_id == r.id)
+                res = await session.execute(stmt)
+                existing = res.scalar_one_or_none()
+                if existing:
+                    existing.name = r.name
+                    existing.name_en = r.name_en
+                    existing.cuisine = r.cuisine
+                    existing.latitude = r.latitude
+                    existing.longitude = r.longitude
+                    existing.address = r.address
+                    existing.phone = r.phone
+                    existing.website = r.website
+                    existing.opening_hours = r.opening_hours
+                    existing.last_edited = r.last_edited
+                    existing.tags_json = json.dumps(r.tags, ensure_ascii=False)
+                else:
+                    item = Restaurant(
+                        osm_id=r.id,
+                        name=r.name,
+                        name_en=r.name_en,
+                        city=city,
+                        cuisine=r.cuisine,
+                        amenity=r.amenity,
+                        latitude=r.latitude,
+                        longitude=r.longitude,
+                        address=r.address,
+                        phone=r.phone,
+                        website=r.website,
+                        opening_hours=r.opening_hours,
+                        last_edited=r.last_edited,
+                        tags_json=json.dumps(r.tags, ensure_ascii=False),
+                    )
+                    session.add(item)
+                count += 1
+            await session.commit()
+            console.print(f"[bold green]✓ Successfully synced {count} restaurants for '{city}' to DB![/bold green]")
+    except Exception as e:
+        console.print(f"[bold red]✗ Sync failed:[/bold red] {e}")
+
+@restaurants_app.command("list")
+@coro
+async def list_restaurants(
+    city: str = typer.Option(..., "--city", "-c", help="City name"),
+    limit: int = typer.Option(20, "--limit", "-l", help="Number of records to display"),
+):
+    """List restaurants stored in the database for a city."""
+    async with async_session_maker() as session:
+        stmt = select(Restaurant).where(Restaurant.city.ilike(f"%{city}%")).limit(limit)
+        res = await session.execute(stmt)
+        items = res.scalars().all()
+
+        if not items:
+            console.print(f"[yellow]No restaurants found in DB for city '{city}'[/yellow]")
+            return
+
+        table = Table(title=f"Restaurants in {city} (DB)", border_style="cyan")
+        table.add_column("OSM ID", style="dim")
+        table.add_column("Name", style="bold green")
+        table.add_column("Cuisine", style="cyan")
+        table.add_column("Phone", style="magenta")
+        table.add_column("Address", style="white")
+
+        for r in items:
+            table.add_row(r.osm_id, r.name, r.cuisine or "-", r.phone or "-", r.address or "-")
+
+        console.print(table)
+
 if __name__ == "__main__":
     app()
+
 

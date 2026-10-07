@@ -7,6 +7,7 @@ from app.crawlers.karnaval.crawler import KarnavalCrawler
 from app.crawlers.jajiga.crawler import JajigaCrawler
 from app.crawlers.safarchin.crawler import SafarchinCrawler
 from app.crawlers.iranhotel.crawler import IranHotelCrawler
+from app.crawlers.openstreetmap.crawler import OpenStreetMapCrawler
 
 __all__ = [
     "BaseCrawler",
@@ -18,5 +19,7 @@ __all__ = [
     "JajigaCrawler",
     "SafarchinCrawler",
     "IranHotelCrawler",
+    "OpenStreetMapCrawler",
 ]
+
 

@@ -49,3 +49,25 @@ class CrawlerHealth(Base):
     failure_count: Mapped[int] = mapped_column(Integer, default=0)
     last_checked_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utc_now)
     last_error: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+
+class Restaurant(Base):
+    __tablename__ = "restaurants"
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    osm_id: Mapped[str] = mapped_column(String(50), unique=True, index=True, nullable=False)
+    name: Mapped[str] = mapped_column(String(255), index=True, nullable=False)
+    name_en: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    city: Mapped[str] = mapped_column(String(100), index=True, nullable=False)
+    cuisine: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    amenity: Mapped[str] = mapped_column(String(50), default="restaurant")
+    latitude: Mapped[float] = mapped_column(Float, nullable=False)
+    longitude: Mapped[float] = mapped_column(Float, nullable=False)
+    address: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    phone: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    website: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
+    opening_hours: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    last_edited: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    tags_json: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utc_now)
+

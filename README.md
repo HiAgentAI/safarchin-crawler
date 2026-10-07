@@ -20,14 +20,15 @@ An extensible, asynchronous online crawler engine aggregating real-time travel a
 "Declared" is what a provider registers; "working" is whether it returns data today.
 Verified 6 October 2026. Full detail in [docs/PROVIDERS.md](docs/PROVIDERS.md).
 
-| Provider | Flight | Hotel | Accommodation | Bus | Train | Working? |
-|---|---|---|---|---|---|---|
-| **alibaba** | yes | - | - | - | yes | ✅ flights + trains verified live |
-| **flytoday** | yes | yes | - | yes | yes | ❌ all hosts fail DNS |
-| **iranhotel** | - | yes | yes | - | - | ⚠️ needs a provider token |
-| **jajiga** | - | - | yes | - | - | ⚠️ not re-verified this session |
-| **karnaval** | - | - | - | - | - | ⛔ registered but serves nothing |
-| **safarchin** | yes | - | - | - | - | ✅ flights verified (6 results) |
+| Provider | Flight | Hotel | Accommodation | Bus | Train | Restaurant | Working? |
+|---|---|---|---|---|---|---|---|
+| **alibaba** | yes | - | - | - | yes | - | ✅ flights + trains verified live |
+| **flytoday** | yes | yes | - | yes | yes | - | ❌ all hosts fail DNS |
+| **iranhotel** | - | yes | yes | - | - | - | ⚠️ needs a provider token |
+| **jajiga** | - | - | yes | - | - | - | ⚠️ not re-verified this session |
+| **karnaval** | - | - | - | - | - | - | ⛔ registered but serves nothing |
+| **safarchin** | yes | - | - | - | - | - | ✅ flights verified (6 results) |
+| **openstreetmap** | - | - | - | - | - | yes | ✅ boundary geocoding + Overpass search |
 
 Alibaba is currently the only provider with no known blocker. FlyToday registers
 four services but every host it calls (`flight.`/`hotel.`/`villa.`/`train.`/`bus.flytoday.ir`)
@@ -144,7 +145,17 @@ docker compose run --rm web python -m app.cli providers token remove --provider 
 docker compose run --rm web python -m app.cli providers token revoke --provider jajiga
 ```
 
+### 6. Restaurant Sync & Local Database
+```bash
+# Sync restaurants for a city into PostgreSQL
+docker compose run --rm web python -m app.cli restaurants sync --city Isfahan
+
+# List restaurants stored in PostgreSQL
+docker compose run --rm web python -m app.cli restaurants list --city Isfahan --limit 20
+```
+
 ---
+
 
 ## 🌐 API Endpoints Reference
 
@@ -188,9 +199,20 @@ Bus search is served by FlyToday only. Train search is served by **FlyToday and 
 
 > **Price units differ by provider and service.** Alibaba quotes flights in Rial and trains in Toman; FlyToday quotes both in Rial. Every response carries a `currency` field, and multi-provider results are ordered by real value rather than by raw amount.
 
-### 5. System & Discovery
+### 5. Restaurants (OpenStreetMap)
+- Search: `GET /api/v1/restaurants/search`
+  - Resolves city administrative boundaries with Nominatim, queries Overpass for nodes/ways/relations, and deduplicates close matches.
+  - **Query Params**:
+    - `city` (required): Destination city name in Persian or English (e.g. `Tehran`, `اصفهان`, `Shiraz`).
+    - `cuisine` (optional): Filter by cuisine type (e.g. `iranian`, `italian`, `kebab`, `fast_food`).
+    - `name` (optional): Filter by restaurant name.
+    - `page` (optional, default `1`): Pagination page.
+    - `limit` (optional, default `50`): Results per page.
+
+### 6. System & Discovery
 - `GET /api/v1/providers`: Lists all active providers and supported services.
 - `GET /api/v1/health`: Service health status.
+
 
 ---
 

@@ -17,7 +17,9 @@ from app.schemas.accommodation import (
     CityItem,
 )
 from app.schemas.transport import TransportSearchQuery, TransportResult
+from app.schemas.restaurant import RestaurantSearchQuery, RestaurantResult
 from app.schemas.common import Currency
+
 import app.crawlers  # noqa: F401 - ensure all crawler providers are registered
 
 logger = logging.getLogger(__name__)
@@ -365,7 +367,25 @@ class CrawlerOrchestrator:
             handle_pagination=False,
         )
 
+    async def search_restaurants(
+        self,
+        query: RestaurantSearchQuery,
+        use_cache: bool = True,
+        ttl_seconds: int = 600,
+    ) -> List[RestaurantResult]:
+        return await self._orchestrate_search(
+            service_name="restaurant",
+            query=query,
+            crawler_method_name="search_restaurants",
+            result_cls=RestaurantResult,
+            sort_key_fn=lambda x: getattr(x, "name", ""),
+            use_cache=use_cache,
+            ttl_seconds=ttl_seconds,
+            handle_pagination=False,
+        )
+
     async def get_hotel_rooms(
+
         self,
         hotel_id: int,
         checkin_date: str,

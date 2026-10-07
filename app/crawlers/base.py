@@ -4,6 +4,7 @@ from app.schemas.flight import FlightSearchQuery, FlightResult
 from app.schemas.hotel import HotelSearchQuery, HotelResult
 from app.schemas.accommodation import AccommodationSearchQuery, AccommodationResult
 from app.schemas.transport import TransportSearchQuery, TransportResult
+from app.schemas.restaurant import RestaurantSearchQuery, RestaurantResult
 
 class BaseCrawler(ABC):
     """Abstract base class for all travel and accommodation crawler adapters."""
@@ -31,6 +32,11 @@ class BaseCrawler(ABC):
     async def search_transport(self, query: TransportSearchQuery) -> List[TransportResult]:
         """Search ground transport (bus or train). Subclasses must override if supported."""
         raise NotImplementedError(f"Transport search is not supported by {self.provider_name}")
+
+    async def search_restaurants(self, query: "RestaurantSearchQuery") -> List["RestaurantResult"]:
+        """Search restaurants. Subclasses must override if supported."""
+        raise NotImplementedError(f"Restaurant search is not supported by {self.provider_name}")
+
 
     async def get_provinces(self) -> list:
         """Fetch list of supported provinces for this provider."""

@@ -7,7 +7,10 @@ from app.core.redis import CacheManager, resolve_cache_params
 from app.schemas.flight import FlightSearchQuery, FlightResult, FlightSegment
 from app.schemas.hotel import HotelSearchQuery, HotelResult, RoomOffer
 from app.schemas.accommodation import AccommodationSearchQuery, AccommodationResult, ProvinceItem, CityItem
+from app.schemas.transport import TransportSearchQuery, TransportResult
+from app.schemas.restaurant import RestaurantSearchQuery, RestaurantResult
 from app.schemas.common import PriceInfo, ProviderInfo, Currency
+
 
 class SuccessFlightCrawler(BaseCrawler):
     provider_name = "success_prov"
@@ -598,3 +601,36 @@ def test_resolve_cache_params_helper():
     use_cache, ttl = resolve_cache_params(cache_time=0)
     assert use_cache is False
     assert ttl == 0
+
+
+@pytest.mark.asyncio
+async def test_orchestrator_search_restaurants(mock_redis):
+    from unittest.mock import AsyncMock, patch
+    from app.crawlers.openstreetmap.crawler import OpenStreetMapCrawler
+
+    registry = CrawlerRegistry()
+    crawler = OpenStreetMapCrawler()
+    fake_res = [
+        RestaurantResult(
+            id="osm:node:1",
+            provider=ProviderInfo(name="openstreetmap"),
+            name="رستوران تست",
+            city="Tehran",
+            latitude=35.7,
+            longitude=51.4,
+        )
+    ]
+    crawler.search_restaurants = AsyncMock(return_value=fake_res)
+    registry.register(OpenStreetMapCrawler, name="openstreetmap", services={"restaurant"})
+    registry._instances["openstreetmap"] = crawler
+
+
+    cache = CacheManager(client=mock_redis)
+    orchestrator = CrawlerOrchestrator(cache_manager=cache)
+
+    with patch("app.crawlers.orchestrator.crawler_registry", registry):
+        query = RestaurantSearchQuery(city="Tehran")
+        results = await orchestrator.search_restaurants(query)
+        assert len(results) == 1
+        assert results[0].name == "رستوران تست"
+
