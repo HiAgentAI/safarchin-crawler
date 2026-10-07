@@ -3,6 +3,7 @@ from app.crawlers.base import BaseCrawler
 from app.crawlers.registry import crawler_registry, register_crawler
 from app.crawlers.alibaba.crawler import AlibabaCrawler
 from app.crawlers.flytoday.crawler import FlyTodayCrawler
+from app.crawlers.iranbus.crawler import IranBusCrawler
 from app.crawlers.karnaval.crawler import KarnavalCrawler
 from app.crawlers.jajiga.crawler import JajigaCrawler
 from app.crawlers.safarchin.crawler import SafarchinCrawler
@@ -15,6 +16,7 @@ __all__ = [
     "register_crawler",
     "AlibabaCrawler",
     "FlyTodayCrawler",
+    "IranBusCrawler",
     "KarnavalCrawler",
     "JajigaCrawler",
     "SafarchinCrawler",

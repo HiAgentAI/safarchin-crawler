@@ -1,9 +1,18 @@
 # Known Issues and How to Fix Them
 
 Five problems found on 6 October 2026, written out in plain language. Each one
-says what a user sees, why it happens, and what the fix would be.
+says what a user sees, why it happens, and what the fix would be. Re-verified
+7 October 2026, when `iranbus` was added as a working bus provider.
 
 Nothing here is fixed. Issue 1 is the most important.
+
+**Since 7 October 2026, bus searches return real data** from the `iranbus`
+provider (iranbus.ir, the national bus cooperatives union), which is
+registered under the `bus` service and verified live. Bus coverage used to be
+zero: FlyToday's bus host does not resolve, Safarchin's transport code is
+unreachable dead code, and Alibaba's bus endpoint rejects every date. Issues 2
+and 4 below are therefore about a *second* bus provider rather than about
+having none.
 
 ---
 
@@ -240,6 +249,8 @@ duplicates still appear identical afterwards.
    serve overstates the system.
 3. **Issue 5** - cosmetic today, but confusing enough to cost a support question.
 4. **Issue 4** - new capability rather than a defect. Needs a browser capture.
+   Bus is now served by `iranbus`, so this is worth doing only if Alibaba's bus
+   results are specifically wanted (its hotel half is still unbuilt).
 5. **Issue 3** - invisible, but it hides working code and needs a decision on
    whether Safarchin's transport implementation is real.
 

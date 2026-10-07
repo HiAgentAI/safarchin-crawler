@@ -2,7 +2,7 @@
 
 An extensible, asynchronous online crawler engine aggregating real-time travel and hospitality data across **Safarchin.ir**, **Alibaba.ir**, **FlyToday.ir**, **Karnaval.ir**, **Jajiga.com**, and **IranHotelOnline.com**.
 
-> **Provider coverage**: Alibaba currently serves **flights** and **trains** only. Its bus and hotel searches are reachable but no request has been found that they accept, so they are not integrated — see [docs/ALIBABA_PROVIDER.md](docs/ALIBABA_PROVIDER.md).
+> **Provider coverage**: Alibaba currently serves **flights** and **trains** only. Its bus and hotel searches are reachable but no request has been found that they accept, so they are not integrated — see [docs/ALIBABA_PROVIDER.md](docs/ALIBABA_PROVIDER.md). **Buses** come from [iranbus.ir](docs/PROVIDERS.md#iranbus) instead.
 
 > 📖 **Guides**: 
 > - **Provider & Service Matrix**: [docs/PROVIDERS.md](docs/PROVIDERS.md)
@@ -18,11 +18,12 @@ An extensible, asynchronous online crawler engine aggregating real-time travel a
 ## Provider coverage
 
 "Declared" is what a provider registers; "working" is whether it returns data today.
-Verified 6 October 2026. Full detail in [docs/PROVIDERS.md](docs/PROVIDERS.md).
+Verified 7 October 2026. Full detail in [docs/PROVIDERS.md](docs/PROVIDERS.md).
 
 | Provider | Flight | Hotel | Accommodation | Bus | Train | Restaurant | Working? |
 |---|---|---|---|---|---|---|---|
 | **alibaba** | yes | - | - | - | yes | - | ✅ flights + trains verified live |
+| **iranbus** | - | - | - | yes | - | - | ✅ bus verified (7 departures THR→MHD) |
 | **flytoday** | yes | yes | - | yes | yes | - | ❌ all hosts fail DNS |
 | **iranhotel** | - | yes | yes | - | - | - | ⚠️ needs a provider token |
 | **jajiga** | - | - | yes | - | - | - | ⚠️ not re-verified this session |
@@ -30,7 +31,9 @@ Verified 6 October 2026. Full detail in [docs/PROVIDERS.md](docs/PROVIDERS.md).
 | **safarchin** | yes | - | - | - | - | - | ✅ flights verified (6 results) |
 | **openstreetmap** | - | - | - | - | - | yes | ✅ boundary geocoding + Overpass search |
 
-Alibaba is currently the only provider with no known blocker. FlyToday registers
+Bus coverage comes from **iranbus.ir**, the national bus cooperatives union,
+which is the only working bus provider: its departures carry company, bus
+class, departure time, terminal, remaining seats and price. FlyToday registers
 four services but every host it calls (`flight.`/`hotel.`/`villa.`/`train.`/`bus.flytoday.ir`)
 fails DNS resolution, so it contributes nothing to any response. See
 [Known Issues](docs/KNOWN_ISSUES.md#2-flytoday-contributes-nothing-at-all).

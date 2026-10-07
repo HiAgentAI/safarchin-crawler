@@ -2,7 +2,7 @@
 
 What each provider is registered for, and whether it actually works right now.
 
-Last checked: **6 October 2026**, against the running container.
+Last checked: **7 October 2026**, against the running container.
 
 ---
 
@@ -14,6 +14,7 @@ Last checked: **6 October 2026**, against the running container.
 | Provider | Flight | Hotel | Accommodation | Bus | Train | Host reachable | Notes |
 |---|---|---|---|---|---|---|---|
 | **alibaba** | yes | - | - | - | yes | yes | Verified live. Bus and hotel not integrated |
+| **iranbus** | - | - | - | yes | - | yes | Verified live. The only working bus provider |
 | **flytoday** | yes | yes | - | yes | yes | **no** | All four sub-domains fail DNS |
 | **iranhotel** | - | yes | yes | - | - | yes | Needs a provider token from the pool |
 | **jajiga** | - | - | yes | - | - | yes | Only accommodation provider with pagination |
@@ -23,7 +24,35 @@ Last checked: **6 October 2026**, against the running container.
 ### What each row means in practice
 
 **alibaba** - Flights and trains both verified returning live, bookable data.
-This is the only provider with no known blocker.
+
+**iranbus** - Intercity bus departures from iranbus.ir, the national bus
+cooperatives union, which sells for around 1400 companies and returns company,
+bus class, departure time, terminal, remaining seats and price. This is the
+**only working bus provider** in the system, and it is reached with no changes
+to the endpoints or the orchestrator.
+
+Two things about it are worth knowing before querying it:
+
+- **Dates are Jalali and formatted `YYYY/MM/DD`.** Callers may pass either a
+  Gregorian or a Jalali date; the adapter converts to the provider's form. The
+  provider rejects anything else with `تاریخ شمسی معتبر نیست`.
+- **Search is city-level, not terminal-level.** A query for Tehran can be
+  answered by any of Tehran's terminals, and the terminal that actually serves
+  the trip is reported in the result's `origin_terminal`.
+
+The provider keys a search by numeric city code, so names are resolved through
+its own city directory (690 cities), cached for 24 hours. English and Persian
+names both resolve; an unknown city raises rather than returning nothing.
+
+Prices are quoted in **rial**, unlike the Alibaba trains (toman) and Alibaba
+flights (rial). The unit is set on each result, so the orchestrator's price
+sort normalizes across providers correctly.
+
+```bash
+# Bus search, iranbus only
+curl -H "X-API-Key: $KEY" \
+  "http://localhost:8000/api/v1/transport/buses?origin=Tehran&destination=Mashhad&depart_date=2026-10-30&providers=iranbus"
+```
 
 **flytoday** - Registers four services, but every host it uses fails to resolve:
 
@@ -83,9 +112,12 @@ So `bus` and `train` are looked up directly. **`transport` is never a lookup key
 
 ```
 lookup 'transport' -> ['safarchin']      <- nobody asks for this
-lookup 'bus'       -> ['flytoday']
+lookup 'bus'       -> ['flytoday', 'iranbus']
 lookup 'train'     -> ['alibaba', 'flytoday']
 ```
+
+A provider declaring `bus` or `train` is picked up directly. `iranbus`
+declares `bus`; `safarchin` declares `transport` and so is not.
 
 `SafarchinCrawler.search_transport` is unreachable dead code. Declaring `bus`
 and/or `train` instead of `transport` would activate it - but that is only correct
