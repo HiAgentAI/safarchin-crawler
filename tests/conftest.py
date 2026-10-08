@@ -44,8 +44,14 @@ class MockRedisClient:
     async def get(self, key: str):
         return self._store.get(key)
 
-    async def set(self, key: str, value: str):
+    async def set(self, key: str, value: str, ex=None, **kwargs):
+        # Accepts the ``ex``/``ttl`` expiry kwargs the real client supports, so
+        # code under test can set an expiry without the double silently failing.
         self._store[key] = value
+        if ex is not None:
+            self._ttls[key] = ex
+        elif kwargs.get("ex") is not None:
+            self._ttls[key] = kwargs["ex"]
         return True
 
     async def setex(self, key: str, time: int, value: str):

@@ -1,0 +1,1362 @@
+{
+ "note": "Sample of real Iranian amenity=fuel nodes, recorded 2026-10-08. Tag text is unmodified and deliberately keeps the mistakes present in live OSM data: the misspelling \"پنپ بنزین\", the misspelled Persian fuel keys fuel:benzin and fuel:بنزین, and node 2326362516 whose Persian name was mis-keyed as narrow. Used to pin fuel-type classification against real input.",
+ "recorded_on": "2026-10-08",
+ "query": "node[\"amenity\"=\"fuel\"](32.3,50.8,36.3,52.2)",
+ "region": "Tehran -> Isfahan corridor bounding box",
+ "population_sampled_from": 591,
+ "sample_size": 120,
+ "elements": [
+  {
+   "type": "node",
+   "id": 27254875,
+   "lat": 32.9817319,
+   "lon": 51.4990379,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین چهلستون",
+    "opening_hours": "Mo-Su,PH 00:00-24:00",
+    "surface": "concrete",
+    "wheelchair": "yes"
+   }
+  },
+  {
+   "type": "node",
+   "id": 387728954,
+   "lat": 32.4779508,
+   "lon": 51.7509745,
+   "tags": {
+    "amenity": "fuel",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 483031074,
+   "lat": 32.7902028,
+   "lon": 51.5162356,
+   "tags": {
+    "amenity": "fuel",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 1163097846,
+   "lat": 35.6613826,
+   "lon": 52.1404646,
+   "tags": {
+    "addr:city": "جمع آبرود",
+    "amenity": "fuel",
+    "name": "پمپ بنزین جایگاه اختصاصی آبسرد",
+    "payment:cash": "yes",
+    "payment:credit_cards": "yes",
+    "self_service": "no",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 1499962744,
+   "lat": 35.6935521,
+   "lon": 51.0762112,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:gasoline": "yes",
+    "name": "پمپ بنزین",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 1680729356,
+   "lat": 35.7780913,
+   "lon": 51.5232223,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:cng": "yes",
+    "name": "جایگاه گاز طبیعی بابایی شمالی",
+    "opening_hours": "24/7",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 2086276670,
+   "lat": 32.641098,
+   "lon": 51.6531549,
+   "tags": {
+    "addr:street": "حکیم نظامی",
+    "amenity": "fuel",
+    "capacity": "20",
+    "name": "پمپ بنزین حکیم نظامی",
+    "name:en": "Hakim Nezami Gas Station",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 2251155996,
+   "lat": 35.9137525,
+   "lon": 50.8280106,
+   "tags": {
+    "addr:street": "آزادراه تهران - قزوین",
+    "amenity": "fuel",
+    "name": "پمپ بنزین ایران زمین",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 2326362516,
+   "lat": 35.3519768,
+   "lon": 51.9915678,
+   "tags": {
+    "addr:street": "بزرگراه امام رضا",
+    "amenity": "fuel",
+    "name:en": "CNG",
+    "narrow": "پمپ بنزین",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 2575569964,
+   "lat": 35.6324888,
+   "lon": 51.3431929,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:cng": "yes",
+    "name": "CNG",
+    "name:en": "CNG Station",
+    "name:fa": "پمپ گاز",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 2819332409,
+   "lat": 32.455335,
+   "lon": 51.537529,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین",
+    "name:en": "Meisam",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 3007397268,
+   "lat": 34.000238,
+   "lon": 51.4447935,
+   "tags": {
+    "addr:city": "کاشان",
+    "addr:street": "میدان شهید منتظری",
+    "amenity": "fuel",
+    "name": "پمپ بنزین",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 3136810689,
+   "lat": 35.690012,
+   "lon": 50.8636248,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:cng": "yes",
+    "name": "CNG پمپ",
+    "name:en": "CNG Gas station",
+    "name:fa": "پمپ گاز",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 3165750111,
+   "lat": 32.8773437,
+   "lon": 51.3588107,
+   "tags": {
+    "amenity": "fuel",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 3237632610,
+   "lat": 35.8495879,
+   "lon": 50.9550012,
+   "tags": {
+    "amenity": "fuel",
+    "compressed_air": "no",
+    "name": "پمپ بنزین شاهین ویلا",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 3303548935,
+   "lat": 35.8555115,
+   "lon": 50.9279614,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:cng": "yes",
+    "name": "پمپ گاز",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 3401433652,
+   "lat": 32.6943095,
+   "lon": 52.1225382,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین",
+    "name:en": "Gas Station",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 3401522451,
+   "lat": 34.173379,
+   "lon": 51.2709139,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 3406378282,
+   "lat": 34.0365546,
+   "lon": 51.4830189,
+   "tags": {
+    "amenity": "fuel",
+    "name": "جایگاه پمپ بنزین",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 3464707105,
+   "lat": 33.9928263,
+   "lon": 51.4646666,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پنپ بنزین",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 3579280541,
+   "lat": 32.3081808,
+   "lon": 52.1859954,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:cng": "yes",
+    "name": "جایگاه گاز CNG",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 3718895714,
+   "lat": 32.6255284,
+   "lon": 51.7847864,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ گاز کمربندی شرق ضلع شرقی"
+   }
+  },
+  {
+   "type": "node",
+   "id": 3763606459,
+   "lat": 33.7551363,
+   "lon": 51.4536303,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین",
+    "name:en": "Gas Station",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 3857367924,
+   "lat": 35.3819721,
+   "lon": 51.9015644,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:gasoline": "yes",
+    "name": "پمپ بنزین",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 3924021500,
+   "lat": 32.3058387,
+   "lon": 50.9052214,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:cng": "yes",
+    "name": "جایگاه CNG",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4035826427,
+   "lat": 32.838708,
+   "lon": 51.7763694,
+   "tags": {
+    "amenity": "fuel",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4041231217,
+   "lat": 32.6279162,
+   "lon": 51.451626,
+   "tags": {
+    "alt_name": "پمپ گاز",
+    "amenity": "fuel",
+    "fuel:cng": "only",
+    "name": "جایگاه CNG",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4087016936,
+   "lat": 35.413956,
+   "lon": 51.8139655,
+   "tags": {
+    "amenity": "fuel",
+    "name": "جایگاه CNG",
+    "name:en": "CNG",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4195377342,
+   "lat": 35.5430029,
+   "lon": 51.5989542,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:diesel": "yes",
+    "fuel:gasoline": "yes",
+    "name": "پمپ بنزین و گازوئیل شهرک صنعتی خاوران",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4202409849,
+   "lat": 32.573736,
+   "lon": 51.5734904,
+   "tags": {
+    "addr:city": "شهر ابریشم",
+    "amenity": "fuel",
+    "name": "پمپ بنزین",
+    "name:en": "gas station",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4235209991,
+   "lat": 34.4332544,
+   "lon": 50.8859497,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین ورجان",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4267146793,
+   "lat": 35.6677258,
+   "lon": 50.9785162,
+   "tags": {
+    "addr:street": "جاده ملارد",
+    "amenity": "fuel",
+    "name": "پمپ بنزین ملارد",
+    "name:en": "Malard gas station",
+    "opening_hours": "24/7",
+    "operator": "Nasery ناصری",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4343884625,
+   "lat": 35.3583774,
+   "lon": 52.036295,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:cng": "yes",
+    "name": "جایگاه سوخت پارسیان",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4347481190,
+   "lat": 35.4318049,
+   "lon": 51.8338816,
+   "tags": {
+    "amenity": "fuel",
+    "name": "جایگاه بنزین آریانا",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4389111884,
+   "lat": 35.6724635,
+   "lon": 50.9245736,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ گاز",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4421920490,
+   "lat": 33.7500005,
+   "lon": 51.7032858,
+   "tags": {
+    "addr:street": "آزادراه خلیج فارس",
+    "amenity": "fuel",
+    "fuel:cng": "yes",
+    "name": "پمپ گاز CNG",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4448436504,
+   "lat": 33.977936,
+   "lon": 51.389982,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:cng": "yes",
+    "name": "پمپ گاز CNG",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4450998927,
+   "lat": 33.9804797,
+   "lon": 51.4743044,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ گاز CNG",
+    "name:en": "Gas Station",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4488011206,
+   "lat": 33.9005181,
+   "lon": 51.7645547,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین توکلی",
+    "name:en": "Tavakoli Gas Station",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4497964771,
+   "lat": 35.6693135,
+   "lon": 50.9797388,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ گاز",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4511622675,
+   "lat": 35.6837216,
+   "lon": 50.8939978,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:cng": "yes",
+    "name": "پمپ گاز ارسطو",
+    "name:en": "Gas Station",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4541543272,
+   "lat": 35.515707,
+   "lon": 51.2255852,
+   "tags": {
+    "amenity": "fuel",
+    "name": "CNG",
+    "name:fa": "پمپ گاز",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4542905101,
+   "lat": 35.5338639,
+   "lon": 51.203715,
+   "tags": {
+    "amenity": "fuel",
+    "name": "CNG جایگاه",
+    "name:en": "CNG",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4549464141,
+   "lat": 32.6798487,
+   "lon": 51.6616294,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین پترو آیریک",
+    "name:en": "Petro Ayric Gas Station",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4563717307,
+   "lat": 35.5693953,
+   "lon": 51.260806,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین پرما",
+    "name:en": "Gas station",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4571320438,
+   "lat": 35.6052353,
+   "lon": 51.3168801,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:cng": "yes",
+    "name": "جایگاه گاز طبیعی مطهری",
+    "name:en": "CNG",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4606073925,
+   "lat": 35.5534615,
+   "lon": 51.505488,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین اختصاصی افتاب",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4657573178,
+   "lat": 32.5821413,
+   "lon": 51.447557,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4697785874,
+   "lat": 35.6535401,
+   "lon": 51.0508903,
+   "tags": {
+    "amenity": "fuel",
+    "name": "جایگاه CNG",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4736500580,
+   "lat": 35.466186,
+   "lon": 50.9946439,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4794990821,
+   "lat": 32.7177484,
+   "lon": 51.6964998,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4907929970,
+   "lat": 35.726193,
+   "lon": 51.8849082,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4986220125,
+   "lat": 35.6724642,
+   "lon": 51.4378341,
+   "tags": {
+    "addr:street": "ری",
+    "amenity": "fuel",
+    "name": "پمپ بنزین",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 5023487241,
+   "lat": 32.7056452,
+   "lon": 51.7004626,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین ایمان",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 5058883983,
+   "lat": 34.6273739,
+   "lon": 50.8499342,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 5073656157,
+   "lat": 35.6875248,
+   "lon": 51.1103235,
+   "tags": {
+    "amenity": "fuel",
+    "name": "CNG جایگاه"
+   }
+  },
+  {
+   "type": "node",
+   "id": 5111176427,
+   "lat": 32.6876402,
+   "lon": 51.5065297,
+   "tags": {
+    "amenity": "fuel",
+    "name": "جایگاه CNG"
+   }
+  },
+  {
+   "type": "node",
+   "id": 5122423925,
+   "lat": 32.6812538,
+   "lon": 51.5659834,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین طلوع فجر",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 5147759035,
+   "lat": 35.5474415,
+   "lon": 51.0429447,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:gasoline": "yes",
+    "name": "پمپ بنزین دنا",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 5148185024,
+   "lat": 32.7621857,
+   "lon": 51.7486487,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین و گاز مروارید",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 5156305649,
+   "lat": 35.7030193,
+   "lon": 50.961154,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین یاس",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 5167017423,
+   "lat": 35.4964789,
+   "lon": 51.6661194,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:cng": "yes",
+    "name": "پمپ گاز CNG",
+    "name:en": "CNG",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 5183014038,
+   "lat": 35.5150623,
+   "lon": 51.3046166,
+   "tags": {
+    "amenity": "fuel",
+    "brand": "Agip",
+    "fuel:benzin": "yes",
+    "fuel:بنزین": "yes",
+    "name": "پمپ بنزین",
+    "opening_hours": "24/7",
+    "payment:cards": "yes",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 5212947132,
+   "lat": 32.6075254,
+   "lon": 51.7414701,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین و گاز",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 5264685933,
+   "lat": 35.3820139,
+   "lon": 51.2580063,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:cng": "yes",
+    "name": "جایگاه CNG",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 5292816924,
+   "lat": 32.6524687,
+   "lon": 51.7206514,
+   "tags": {
+    "amenity": "fuel",
+    "name": "همدانیان",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 5370595185,
+   "lat": 35.6114528,
+   "lon": 51.2045629,
+   "tags": {
+    "amenity": "fuel",
+    "name": "جایگاه سوخت نگین صحرا"
+   }
+  },
+  {
+   "type": "node",
+   "id": 5410755367,
+   "lat": 35.6309325,
+   "lon": 50.9304358,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:benzine": "yes",
+    "fuel:diesel": "yes",
+    "name": "جایگاه بنزین احمدی",
+    "operator": "احمدی"
+   }
+  },
+  {
+   "type": "node",
+   "id": 5525765297,
+   "lat": 32.6512944,
+   "lon": 51.4830355,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین"
+   }
+  },
+  {
+   "type": "node",
+   "id": 5561402421,
+   "lat": 35.5433022,
+   "lon": 51.5991746,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:cng": "yes",
+    "name": "جایگاه گاز",
+    "name:en": "CNG"
+   }
+  },
+  {
+   "type": "node",
+   "id": 5699319788,
+   "lat": 35.7416629,
+   "lon": 51.5938131,
+   "tags": {
+    "amenity": "fuel",
+    "name": "جایگاه اختصاصی ۱۶۹ ولیعصر (عج)",
+    "opening_hours": "24/7"
+   }
+  },
+  {
+   "type": "node",
+   "id": 5729515521,
+   "lat": 35.6272611,
+   "lon": 51.3748064,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:cng": "yes",
+    "name": "پمپ گاز شقایق",
+    "name:en": "CNG"
+   }
+  },
+  {
+   "type": "node",
+   "id": 5749933497,
+   "lat": 35.5420631,
+   "lon": 51.5956544,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:cng": "yes"
+   }
+  },
+  {
+   "type": "node",
+   "id": 5779317043,
+   "lat": 35.6969036,
+   "lon": 51.1412689,
+   "tags": {
+    "amenity": "fuel",
+    "name": "گازوئیل"
+   }
+  },
+  {
+   "type": "node",
+   "id": 5791844410,
+   "lat": 35.813968,
+   "lon": 50.8572187,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:cng": "yes",
+    "name": "جایگاه CNG"
+   }
+  },
+  {
+   "type": "node",
+   "id": 5799538911,
+   "lat": 35.7364214,
+   "lon": 51.8526181,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:cng": "yes",
+    "name": "جایگاه CNG بومهن"
+   }
+  },
+  {
+   "type": "node",
+   "id": 5846083832,
+   "lat": 35.5658675,
+   "lon": 51.097217,
+   "tags": {
+    "amenity": "fuel",
+    "name": "CNG پمپ گاز"
+   }
+  },
+  {
+   "type": "node",
+   "id": 5846276644,
+   "lat": 35.5632052,
+   "lon": 51.1130741,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین صباشهر"
+   }
+  },
+  {
+   "type": "node",
+   "id": 5891690727,
+   "lat": 35.6437256,
+   "lon": 51.1519252,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:diesel": "yes",
+    "fuel:gasoline": "yes",
+    "name": "جایگاه جهان آرا (بنزین و گازوئیل)"
+   }
+  },
+  {
+   "type": "node",
+   "id": 5917758853,
+   "lat": 35.6948857,
+   "lon": 51.111315,
+   "tags": {
+    "amenity": "fuel",
+    "name": "ماهان CNG جایگاه"
+   }
+  },
+  {
+   "type": "node",
+   "id": 5956420617,
+   "lat": 32.4794362,
+   "lon": 51.4513385,
+   "tags": {
+    "amenity": "fuel",
+    "name": "جایگاه CNG ایمانشهر"
+   }
+  },
+  {
+   "type": "node",
+   "id": 6005527502,
+   "lat": 33.486231,
+   "lon": 51.9334557,
+   "tags": {
+    "amenity": "fuel",
+    "name": "جایگاه CNG"
+   }
+  },
+  {
+   "type": "node",
+   "id": 6120857849,
+   "lat": 35.6225835,
+   "lon": 51.4436009,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین"
+   }
+  },
+  {
+   "type": "node",
+   "id": 6242155785,
+   "lat": 35.4419512,
+   "lon": 51.582354,
+   "tags": {
+    "amenity": "fuel",
+    "name": "جایگاه CNG شهرداری قرچک",
+    "name:en": "CNG"
+   }
+  },
+  {
+   "type": "node",
+   "id": 6341089198,
+   "lat": 32.6288941,
+   "lon": 51.5562592,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین"
+   }
+  },
+  {
+   "type": "node",
+   "id": 6371194391,
+   "lat": 35.9137174,
+   "lon": 50.8285574,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:cng": "yes",
+    "name": "پمپ گاز ایران زمین",
+    "name:en": "Iran Zamin CNG Station"
+   }
+  },
+  {
+   "type": "node",
+   "id": 6419176608,
+   "lat": 34.586642,
+   "lon": 50.9189289,
+   "tags": {
+    "amenity": "fuel",
+    "name": "جایگاه بنزین"
+   }
+  },
+  {
+   "type": "node",
+   "id": 6548288045,
+   "lat": 35.8110328,
+   "lon": 51.3931095,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین ۲۰۶"
+   }
+  },
+  {
+   "type": "node",
+   "id": 6631731732,
+   "lat": 35.69662,
+   "lon": 51.1418554,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین مروارید"
+   }
+  },
+  {
+   "type": "node",
+   "id": 6695863285,
+   "lat": 35.5486842,
+   "lon": 51.5836341,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ گاز پرچم",
+    "name:en": "CNG"
+   }
+  },
+  {
+   "type": "node",
+   "id": 6703511859,
+   "lat": 32.7772757,
+   "lon": 51.8742187,
+   "tags": {
+    "amenity": "fuel"
+   }
+  },
+  {
+   "type": "node",
+   "id": 6833086905,
+   "lat": 35.4098604,
+   "lon": 51.7974223,
+   "tags": {
+    "amenity": "fuel",
+    "name": "جایگاه CNG"
+   }
+  },
+  {
+   "type": "node",
+   "id": 6871712519,
+   "lat": 32.4402381,
+   "lon": 51.5741417,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین"
+   }
+  },
+  {
+   "type": "node",
+   "id": 6896238488,
+   "lat": 32.7961441,
+   "lon": 51.6555525,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین ادهم"
+   }
+  },
+  {
+   "type": "node",
+   "id": 7080279222,
+   "lat": 35.5508368,
+   "lon": 51.4082427,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:بنزین_معمولی": "yes",
+    "name": "پمپ‌بنزین"
+   }
+  },
+  {
+   "type": "node",
+   "id": 7287606685,
+   "lat": 35.6062981,
+   "lon": 51.5022938,
+   "tags": {
+    "addr:street": "اسکندرلو",
+    "amenity": "fuel",
+    "name": "پمپ بنزین رضویه"
+   }
+  },
+  {
+   "type": "node",
+   "id": 7417205161,
+   "lat": 32.8415628,
+   "lon": 50.9139112,
+   "tags": {
+    "amenity": "fuel",
+    "name": "Cng"
+   }
+  },
+  {
+   "type": "node",
+   "id": 7508559841,
+   "lat": 35.2197986,
+   "lon": 51.6718895,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین"
+   }
+  },
+  {
+   "type": "node",
+   "id": 7780930145,
+   "lat": 32.7189501,
+   "lon": 51.5919619,
+   "tags": {
+    "amenity": "fuel",
+    "description": "کیفیت نازل ها قابل قبول هست رتبه این جایگاه در شرکت نفت ممتاز است و امکان پرداخت با کارت بانکی فراهم میباشد. جایگاه در کنارگذر خیابان امام خمینی واقع شده حتما موقع خروج و یا ورود مراقب باشید ماشینها با سرعت بالا وارد کنارگذر می شوند که ممکنه باعث تصادف بش",
+    "name": "پمپ بنزین رسالت"
+   }
+  },
+  {
+   "type": "node",
+   "id": 7984801636,
+   "lat": 35.67267,
+   "lon": 52.0718238,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:cng": "yes",
+    "name": "جایگاه CNG"
+   }
+  },
+  {
+   "type": "node",
+   "id": 8293398017,
+   "lat": 35.5482362,
+   "lon": 51.2240371,
+   "tags": {
+    "amenity": "fuel",
+    "name": "جایگاه گاز طبیعی",
+    "name:en": "CNG"
+   }
+  },
+  {
+   "type": "node",
+   "id": 8487262349,
+   "lat": 32.5024652,
+   "lon": 51.93458,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین صادقی پور"
+   }
+  },
+  {
+   "type": "node",
+   "id": 8564451794,
+   "lat": 32.456965,
+   "lon": 51.5576114,
+   "tags": {
+    "amenity": "fuel",
+    "name": "سلیمانی",
+    "surface": "concrete"
+   }
+  },
+  {
+   "type": "node",
+   "id": 8642241557,
+   "lat": 35.3972699,
+   "lon": 51.6372073,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین"
+   }
+  },
+  {
+   "type": "node",
+   "id": 8901730863,
+   "lat": 32.5882563,
+   "lon": 51.6720921,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:gasoline": "yes",
+    "name": "جایگاه گازوئیل پایانه صفه"
+   }
+  },
+  {
+   "type": "node",
+   "id": 8988404879,
+   "lat": 32.4722155,
+   "lon": 51.4712439,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین"
+   }
+  },
+  {
+   "type": "node",
+   "id": 9035566217,
+   "lat": 35.5524481,
+   "lon": 51.1615847,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین"
+   }
+  },
+  {
+   "type": "node",
+   "id": 9041361219,
+   "lat": 35.5542548,
+   "lon": 51.033378,
+   "tags": {
+    "amenity": "fuel",
+    "name": "جایگاه CNG"
+   }
+  },
+  {
+   "type": "node",
+   "id": 9072749549,
+   "lat": 35.4138161,
+   "lon": 51.5820562,
+   "tags": {
+    "amenity": "fuel",
+    "name": "جایگاه CNG"
+   }
+  },
+  {
+   "type": "node",
+   "id": 9077617179,
+   "lat": 35.5148588,
+   "lon": 51.6718961,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین"
+   }
+  },
+  {
+   "type": "node",
+   "id": 9150961131,
+   "lat": 35.5537817,
+   "lon": 51.5050249,
+   "tags": {
+    "amenity": "fuel",
+    "name": "گازوئیل"
+   }
+  },
+  {
+   "type": "node",
+   "id": 9322916427,
+   "lat": 33.9995662,
+   "lon": 51.4610832,
+   "tags": {
+    "addr:street": "میدان زجاجی",
+    "amenity": "fuel",
+    "name": "پمپ بنزین"
+   }
+  },
+  {
+   "type": "node",
+   "id": 9372779881,
+   "lat": 35.6353873,
+   "lon": 51.4942528,
+   "tags": {
+    "addr:city": "تهران",
+    "addr:street": "بلوار قائم",
+    "amenity": "fuel",
+    "name": "پمپ بنزین مسعودیه"
+   }
+  },
+  {
+   "type": "node",
+   "id": 9620739506,
+   "lat": 33.4151085,
+   "lon": 51.1909999,
+   "tags": {
+    "amenity": "fuel",
+    "name": "جایگاه CNG"
+   }
+  },
+  {
+   "type": "node",
+   "id": 9623180679,
+   "lat": 32.9131559,
+   "lon": 51.5374977,
+   "tags": {
+    "amenity": "fuel",
+    "name": "پمپ بنزین هشت بهشت"
+   }
+  },
+  {
+   "type": "node",
+   "id": 9623947581,
+   "lat": 34.0068255,
+   "lon": 50.8213396,
+   "tags": {
+    "amenity": "fuel",
+    "name": "جایگاه CNG"
+   }
+  },
+  {
+   "type": "node",
+   "id": 9794662139,
+   "lat": 35.721135,
+   "lon": 51.1566123,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:lpg": "yes"
+   }
+  },
+  {
+   "type": "node",
+   "id": 9918301322,
+   "lat": 35.7300592,
+   "lon": 51.4231228,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:gasoline": "yes",
+    "name": "پمپ بنزین شرکتی ۲۴"
+   }
+  },
+  {
+   "type": "node",
+   "id": 10003499115,
+   "lat": 35.8679508,
+   "lon": 50.9892479,
+   "tags": {
+    "amenity": "fuel",
+    "fuel:gasoline": "yes",
+    "name": "پنپ بنزین محمود آباد"
+   }
+  },
+  {
+   "type": "node",
+   "id": 10109263093,
+   "lat": 35.3129028,
+   "lon": 51.657048,
+   "tags": {
+    "amenity": "fuel",
+    "name": "جایگاه CNG"
+   }
+  }
+ ]
+}

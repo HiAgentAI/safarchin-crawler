@@ -86,6 +86,52 @@ never dispatched) or removed.
 
 ---
 
+## Fuel stations (not part of the orchestrator)
+
+Fuel stations come from **OpenStreetMap**, and they deliberately do **not** go
+through `CrawlerOrchestrator`.
+
+```python
+GET /api/v1/fuel-stations?origin=Tehran&destination=Isfahan&radius_m=1000
+```
+
+The service is `app/crawlers/fuelstation/`, driven by `FuelStationService`:
+
+```
+origin / destination  ->  geocode if needed (Nominatim)
+                      ->  route (OSRM)          geometry, distance, duration
+                      ->  bbox + projection     all fuel nodes near the route
+                      ->  filter, classify, sort corridor radius, fuel type, km along route
+```
+
+Three things differ from every other service here.
+
+**It does not use the orchestrator.** The orchestrator merges results from
+several providers and sorts by price. Neither applies to a corridor: there is
+one source, and the useful ordering is distance into the trip. The projection
+step also happens *between* data sources, which the orchestrator has no hook
+for. It reuses the OSM adapter's mirror list and Redis conventions, but not its
+pipeline.
+
+**It answers a corridor question, not an area question.** The OSM adapter's
+restaurant search resolves a city boundary and queries inside it. "Along this
+road" needs a route geometry first. Candidates are fetched with a **single
+bounding-box query** and then filtered locally. The obvious alternative — a
+union of `node(around:…)` selectors sampled along the route — was measured
+returning **1 node instead of 22** on Tehran→Isfahan, with HTTP 200. It fails
+silently, so the query shape is pinned by test rather than left to taste.
+
+**It reports coverage, not just results.** The response carries
+`largest_gap_km`. OpenStreetMap coverage of Iranian fuel stations is uneven,
+and an unreported gap reads as a verified absence. See
+[KNOWN_ISSUES.md](KNOWN_ISSUES.md#6-fuel-station-coverage-is-uneven).
+
+Fuel prices are **not** returned. Iranian octane-tier pricing and ration-card
+programmes are administratively set and appear nowhere in OpenStreetMap, so
+there is no value this API could report honestly.
+
+---
+
 ## Service dispatch: how a search finds its providers
 
 A search asks the registry for every crawler registered under a service name:

@@ -18,18 +18,18 @@ An extensible, asynchronous online crawler engine aggregating real-time travel a
 ## Provider coverage
 
 "Declared" is what a provider registers; "working" is whether it returns data today.
-Verified 7 October 2026. Full detail in [docs/PROVIDERS.md](docs/PROVIDERS.md).
+Verified 7 October 2026; fuel stations re-verified 8 October 2026. Full detail in [docs/PROVIDERS.md](docs/PROVIDERS.md).
 
-| Provider | Flight | Hotel | Accommodation | Bus | Train | Restaurant | Working? |
-|---|---|---|---|---|---|---|---|
-| **alibaba** | yes | - | - | - | yes | - | ✅ flights + trains verified live |
-| **iranbus** | - | - | - | yes | - | - | ✅ bus verified (7 departures THR→MHD) |
-| **flytoday** | yes | yes | - | yes | yes | - | ❌ all hosts fail DNS |
-| **iranhotel** | - | yes | yes | - | - | - | ⚠️ needs a provider token |
-| **jajiga** | - | - | yes | - | - | - | ⚠️ not re-verified this session |
-| **karnaval** | - | - | - | - | - | - | ⛔ registered but serves nothing |
-| **safarchin** | yes | - | - | - | - | - | ✅ flights verified (6 results) |
-| **openstreetmap** | - | - | - | - | - | yes | ✅ boundary geocoding + Overpass search |
+| Provider | Flight | Hotel | Accommodation | Bus | Train | Restaurant | Fuel stations | Working? |
+|---|---|---|---|---|---|---|---|---|
+| **alibaba** | yes | - | - | - | yes | - | - | ✅ flights + trains verified live |
+| **iranbus** | - | - | - | yes | - | - | - | ✅ bus verified (7 departures THR→MHD) |
+| **flytoday** | yes | yes | - | yes | yes | - | - | ❌ all hosts fail DNS |
+| **iranhotel** | - | yes | yes | - | - | - | - | ⚠️ needs a provider token |
+| **jajiga** | - | - | yes | - | - | - | - | ⚠️ not re-verified this session |
+| **karnaval** | - | - | - | - | - | - | - | ⛔ registered but serves nothing |
+| **safarchin** | yes | - | - | - | - | - | - | ✅ flights verified (6 results) |
+| **openstreetmap** | - | - | - | - | - | yes | yes | ✅ boundary geocoding, Overpass search, route corridors |
 
 Bus coverage comes from **iranbus.ir**, the national bus cooperatives union,
 which is the only working bus provider: its departures carry company, bus
@@ -212,7 +212,21 @@ Bus search is served by FlyToday only. Train search is served by **FlyToday and 
     - `page` (optional, default `1`): Pagination page.
     - `limit` (optional, default `50`): Results per page.
 
-### 6. System & Discovery
+### 6. Fuel Stations Along a Route (OpenStreetMap)
+- Search: `GET /api/v1/fuel-stations`
+  - Resolves the route between two points (OSRM), then finds every fuel station within a corridor of that road, ordered by how far into the journey it falls.
+  - **Query Params**:
+    - `origin` (required): City name or `lat,lon` pair (e.g. `Tehran`, `35.6892,51.3890`).
+    - `destination` (required): City name or `lat,lon` pair (e.g. `Isfahan`, `32.6539,51.6660`).
+    - `radius_m` (optional, default `1000`): Corridor half-width in metres (max `10000`).
+    - `fuel_types` (optional): Comma-separated filter, e.g. `petrol,diesel`. Omit to return all types.
+    - `no_cache` (optional, default `false`): Bypass the cached route lookup.
+  - Each result carries `fuel_type` (`petrol`/`diesel`/`cng`/`lpg`/`unknown`), `km_into_trip`, and `distance_off_route_m`.
+  - The response reports `largest_gap_km`, the longest stretch with no station. OpenStreetMap coverage of Iranian fuel is uneven, so a bare empty list would read as a verified absence rather than "we found nothing here".
+  - **No prices are returned.** Iranian octane-tier pricing and ration cards are administratively set and are not in OpenStreetMap.
+  - Does not use `CrawlerOrchestrator`: one source, and the useful ordering is distance into the trip rather than price. See [docs/PROVIDERS.md](docs/PROVIDERS.md).
+
+### 7. System & Discovery
 - `GET /api/v1/providers`: Lists all active providers and supported services.
 - `GET /api/v1/health`: Service health status.
 

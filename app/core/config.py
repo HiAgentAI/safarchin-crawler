@@ -49,6 +49,16 @@ class Settings(BaseSettings):
     DEFAULT_RATE_LIMIT_PER_MINUTE: int = 60
     DEFAULT_DAILY_QUOTA: int = 1000
 
+    # Fuel stations (OpenStreetMap corridor search)
+    # The public OSRM demo endpoint works for verification but carries no
+    # availability guarantee, so production should point this at a self-hosted
+    # or contracted instance.
+    OSRM_BASE_URL: str = "https://router.project-osrm.org"
+    NOMINATIM_URL: str = "https://nominatim.openstreetmap.org/search"
+    FUEL_CORRIDOR_RADIUS_M: int = 1000
+    FUEL_CORRIDOR_MAX_RADIUS_M: int = 10000
+    FUEL_ROUTE_CACHE_TTL_SECONDS: int = 86400
+
     # Crawlers
     CRAWLER_DEFAULT_TIMEOUT: float = 15.0
     CRAWLER_MAX_CONCURRENCY: int = 5

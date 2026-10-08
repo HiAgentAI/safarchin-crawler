@@ -2,7 +2,8 @@
 
 Five problems found on 6 October 2026, written out in plain language. Each one
 says what a user sees, why it happens, and what the fix would be. Re-verified
-7 October 2026, when `iranbus` was added as a working bus provider.
+7 October 2026, when `iranbus` was added as a working bus provider. Issue 6 was
+added 8 October 2026 alongside the fuel station endpoint.
 
 Nothing here is fixed. Issue 1 is the most important.
 
@@ -253,6 +254,64 @@ duplicates still appear identical afterwards.
    results are specifically wanted (its hotel half is still unbuilt).
 5. **Issue 3** - invisible, but it hides working code and needs a decision on
    whether Safarchin's transport implementation is real.
+6. **Issue 6** - not a defect in this codebase. Fuel station coverage comes from
+   OpenStreetMap and is uneven on rural highways. The API already reports
+   `largest_gap_km` so absence is not mistaken for fact; the underlying gap
+   needs a coverage audit, or contributions to OpenStreetMap.
 
 Issues 2 and 4 both need the same first step: open the provider's site in a browser
 and watch what it actually requests.
+
+---
+
+## 6. Fuel station coverage is uneven
+
+**What a user sees:** a route search that finds nothing for a long stretch.
+On Tehran → Isfahan, with a 1 km corridor, stations appear near km 28 and then
+nothing until roughly km 120 — a **92 km hole** in the middle of the trip.
+
+**Why it happens.** OpenStreetMap's fuel coverage is not uniform. Iran has
+3,924 mapped `amenity=fuel` nodes against roughly 3,800 real stations, so the
+national total is close to complete. The gaps are local, not national: they
+cluster on rural highway stretches where mapping has thinned.
+
+**Whether this is a mapping gap or genuinely empty road is unresolved.**
+Probes for other amenities in the same stretch came back with zero pharmacies,
+which is not credible for rural Iran and points at unmapped ground rather than
+an absence of settlements. Those probes were rate-limited part of the time, so
+the question is not settled. Either way, the API's behaviour is the same.
+
+**What the API does about it.** The response reports `largest_gap_km`, the
+longest stretch of route between consecutive returned stations. This is
+deliberate: a bare empty list reads as "there is no fuel here", which is a
+claim about the world this system cannot support. A reported gap reads as what
+it is — *we found nothing here*, which may mean the ground is unmapped.
+
+```
+GET /api/v1/fuel-stations?origin=Tehran&destination=Isfahan&radius_m=1000
+
+{
+  "status": "success",
+  "total_results": 22,
+  "data_source": "openstreetmap",
+  "route": {"origin": "Tehran", "destination": "Isfahan",
+            "distance_km": 437.96, "duration_h": 4.82},
+  "corridor_radius_m": 1000,
+  "largest_gap_km": 92.5,
+  "results": [ ... ]
+}
+```
+
+**How it could be fixed.** The fix is not in this API. If the stretch is
+unmapped, the correct action is to contribute those stations to OpenStreetMap;
+the response shape will pick them up with no code change. A coverage audit
+against a second source would settle which case this is.
+
+**A related trap, already handled.** Around 10% of stations cannot be
+classified by fuel type, mostly because they carry no name at all. They are
+reported as `unknown` rather than defaulted to petrol — defaulting raises
+apparent coverage but would send a diesel driver to a CNG-only pump. Note also
+that `پمپ گاز` means **CNG**, not petrol: Persian for natural gas is the same
+word an English reader takes to mean gasoline, and matching on it misfiles
+about 28% of the country. The classifier orders its patterns to make that
+mistake unrepresentable, and the ordering is pinned by test.
